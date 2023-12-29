@@ -107,8 +107,8 @@ def test_git_inference_single_image(image_path, model_name, prefix, output_path)
         })
     cap = tokenizer.decode(result['predictions'][0].tolist(), skip_special_tokens=True)
     with open(output_path, 'w') as file:
-        print("Caption saved in ", output_path)
         file.write(cap)
+    logging.info(f"Caption saved in {output_path}")
     logging.info('output: {}'.format(cap))
 
 def get_image_transform(param):
