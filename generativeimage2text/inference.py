@@ -64,7 +64,7 @@ class MinMaxResizeForTest(object):
         return image
 
 
-def test_git_inference_single_image(image_path, model_name, prefix):
+def test_git_inference_single_image(image_path, model_name, prefix, output_path):
     param = {}
     if File.isfile(f'aux_data/models/{model_name}/parameter.yaml'):
         param = load_from_yaml_file(f'aux_data/models/{model_name}/parameter.yaml')
@@ -106,6 +106,9 @@ def test_git_inference_single_image(image_path, model_name, prefix):
             'prefix': torch.tensor(input_ids).unsqueeze(0).cuda(),
         })
     cap = tokenizer.decode(result['predictions'][0].tolist(), skip_special_tokens=True)
+    with open(output_path, 'w') as file:
+        print("Caption saved in ", output_path)
+        file.write(cap)
     logging.info('output: {}'.format(cap))
 
 def get_image_transform(param):
